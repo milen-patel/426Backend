@@ -31,6 +31,9 @@ const { newUserSchema } = require("./routes/validation");
 // Read request bodies as JSON
 app.use(express.json());
 
+app.get('/', (req, res) => {
+  res.send('Welcome to the backend!');
+})
 
 app.use("/api/users", authenticationRoute);
 app.get("/api/userlevel", verifyToken, (req, res) => {
