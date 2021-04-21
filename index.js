@@ -3,6 +3,8 @@ const mongoose = require("mongoose");
 const app = express();
 const dotenv = require("dotenv");
 const verifyToken = require("./routes/validate-token");
+const cors = require('cors');
+app.use(cors());
 
 
 // Import all routes
