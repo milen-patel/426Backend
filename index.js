@@ -4,6 +4,12 @@ const app = express();
 const dotenv = require("dotenv");
 const verifyToken = require("./routes/validate-token");
 
+
+// Import all routes
+const authenticationRoute = require("./routes/authentication");
+const manageRoute = require("./routes/manage");
+const userGettersRoute = require("./routes/userGetters");
+
 dotenv.config();
 
 
@@ -22,25 +28,11 @@ mongoose.connect(
     () => console.log("Successfully Connected to MongoDB.")
   );
 
-// Import all rouotes
-const authenticationRoute = require("./routes/authentication");
-const { newUserSchema } = require("./routes/validation");
-
-
-// Middleware
 // Read request bodies as JSON
 app.use(express.json());
 
-app.get('/', (req, res) => {
-  res.send('Welcome to the backend!');
-})
-
 app.use("/api/users", authenticationRoute);
-app.get("/api/userlevel", verifyToken, (req, res) => {
-  res.json(
-    {
-      error: null,
-      level: 50,
-    }
-  )
-});
+app.use("/api/property", verifyToken, manageRoute);
+app.use("/api/user/", verifyToken, userGettersRoute);
+
+//TODO Add Leaderboard

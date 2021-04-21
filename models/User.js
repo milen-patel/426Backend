@@ -9,11 +9,28 @@ const userSchema = new mongoose.Schema(
             type: Date,
             default: Date.now,
         },
-        level: {
+        experience: {
             type: Number,
-            default: 1,
-        }
+            default: 0,
+        },
+        properties: {
+            type: Array,
+            default: [],
+        },
+        balance: {
+            type: Number,
+            default: 5000,
+        },
+        maxProperties: {
+            type: Number,
+            default: 5,
+        },
+        location: {
+          type: [Number],
+          index: `2dsphere`,
+        },
     }
 );
 
+userSchema.index({location: "2dsphere"});
 module.exports = mongoose.model("User", userSchema);
