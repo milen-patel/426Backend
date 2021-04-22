@@ -87,7 +87,7 @@ router.post("/nearbyProperties", async (req, res) => {
 
   let results;
   try {
-    await Property.find({
+    results = await Property.find({
       location: {
         $near: {
           $maxDistance: range,
