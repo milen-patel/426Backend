@@ -45,7 +45,7 @@ router.post("/addPropertyTemp", async (req, res) => {
   res.send("E");
 });
 
-router.get("/propertyByID", async (req, res) => {
+router.post("/propertyByID", async (req, res) => {
   if (!req.body.id) {
     res.json({ error: "No ID specified" });
     return;
@@ -63,7 +63,7 @@ router.get("/propertyByID", async (req, res) => {
   res.json({ error: null, body: target });
 });
 
-router.get("/nearbyProperties", async (req, res) => {
+router.post("/nearbyProperties", async (req, res) => {
   //Make sure we have input
   if (!req.body.lat) {
     res.json({ error: "Missing lat" });
