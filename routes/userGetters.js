@@ -74,11 +74,7 @@ router.get("/accountInformation", async (req, res) => {
   }
   res.json({
     error: null,
-    data: {
-      accountCreationDate: user.accountCreatedDate,
-      name: user.name,
-      email: user.email,
-    },
+    data: user,
   });
 });
 
