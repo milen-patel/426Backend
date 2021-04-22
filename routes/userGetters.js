@@ -117,7 +117,11 @@ router.post("/move", async (req, res) => {
   // Make changes
   user.balance -= meters;
   user.location = [newLat, newLon];
-  await user.save();
+  try {
+    await user.save();
+  } catch (error) {
+    console.log(`ERROR: ${error}}`);
+  }
   res.json({
     error: null,
     data: {
@@ -151,34 +155,36 @@ function distanceInKmBetweenEarthCoordinates(lat1, lon1, lat2, lon2) {
 }
 
 router.post("/buyLevel", async (req, res) => {
-    const user = await User.findOne({ email: req.user.email });
+  const user = await User.findOne({ email: req.user.email });
 
-    if (!user) {
-      res.json(defaultError);
-      return;
-    }
+  if (!user) {
+    res.json(defaultError);
+    return;
+  }
 
-    //Ensure that the user has enough money
-    const bal = user.balance;
-    const currLim = user.maxProperties;
+  //Ensure that the user has enough money
+  const bal = user.balance;
+  const currLim = user.maxProperties;
 
-    if (bal < currLim**3) {
-        res.json({error: `Insufficient funds. Need ${currLim**3} but only have ${bal}`});
-        return;
-    }
-
-    // Change user
-    user.maxProperties*=2;
-    user.balance-=currLim**3;
-
-    await user.save();
+  if (bal < currLim ** 3) {
     res.json({
-        error:null,
-        data: {
-            balance: user.balance,
-            maxProperties: user.maxProperties,
-        }
-    })
+      error: `Insufficient funds. Need ${currLim ** 3} but only have ${bal}`,
+    });
+    return;
+  }
+
+  // Change user
+  user.maxProperties *= 2;
+  user.balance -= currLim ** 3;
+
+  await user.save();
+  res.json({
+    error: null,
+    data: {
+      balance: user.balance,
+      maxProperties: user.maxProperties,
+    },
+  });
 });
 
 module.exports = router;
