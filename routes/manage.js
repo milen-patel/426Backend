@@ -85,17 +85,24 @@ router.post("/nearbyProperties", async (req, res) => {
   const targetLon = req.body.lon;
   const range = req.body.range;
 
-  let results = await Property.find({
-    location: {
-      $near: {
-        $maxDistance: range,
-        $geometry: {
-          type: "Point",
-          coordinates: [targetLat, targetLon],
+  let results;
+  try {
+    await Property.find({
+      location: {
+        $near: {
+          $maxDistance: range,
+          $geometry: {
+            type: "Point",
+            coordinates: [targetLat, targetLon],
+          },
         },
       },
-    },
-  });
+    });
+  } catch (error){
+    console.log("Error");
+    console.log(error);
+    console.log(error.toString());
+  }
 
   res.send(results);
 });
@@ -160,17 +167,18 @@ router.post("/buy", async (req, res) => {
   }
 
   // Make sure user has balance
-  const price = targetProperty.value**t;
+  const price = targetProperty.value ** t;
   if (price > user.balance) {
-      res.json({ error: `Insufficient Funds. Need ${price} but only have ${user.balance}` });
-      return;
+    res.json({
+      error: `Insufficient Funds. Need ${price} but only have ${user.balance}`,
+    });
+    return;
   }
 
   // Make sure user has property space
   if (user.properties.length == user.maxProperties) {
-      res.json({error: "Not enough property space"});
-      return;
-
+    res.json({ error: "Not enough property space" });
+    return;
   }
 
   // Charge user
@@ -178,15 +186,15 @@ router.post("/buy", async (req, res) => {
 
   // Update property owners
   if (t == 1) {
-      targetProperty.ownerEmailT1=user.email;
+    targetProperty.ownerEmailT1 = user.email;
   } else if (t == 2) {
-      targetProperty.ownerEmailT2=user.email;
+    targetProperty.ownerEmailT2 = user.email;
   } else if (t == 3) {
-      targetProperty.ownerEmailT3=user.email;
+    targetProperty.ownerEmailT3 = user.email;
   } else if (t == 4) {
-      targetProperty.ownerEmailT4=user.email;
+    targetProperty.ownerEmailT4 = user.email;
   } else {
-      targetProperty.ownerEmailT5=user.email;
+    targetProperty.ownerEmailT5 = user.email;
   }
 
   // Update user properties owned
@@ -199,12 +207,12 @@ router.post("/buy", async (req, res) => {
   await targetProperty.save();
 
   res.json({
-      error: null,
-      data: {
-          user: user,
-          property:targetProperty,
-      }
-  })
+    error: null,
+    data: {
+      user: user,
+      property: targetProperty,
+    },
+  });
 });
 
 module.exports = router;
