@@ -38,7 +38,7 @@ router.post("/register", async (req, res) => {
     name: req.body.name,
     email: req.body.email,
     password: password,
-    location: [35.9132, 79.0558]
+    location: [35.9132, -79.0558]
   });
 
   // Try to save user into database

@@ -10,31 +10,31 @@ router.post("/addPropertyTemp", async (req, res) => {
       name: "Larke",
       value: 250,
       hourlyIncome: 60,
-      location: [35.917807, 79.052262],
+      location: [35.917807, -79.052262],
     },
     {
       name: "Union",
       value: 250,
       hourlyIncome: 60,
-      location: [35.91942, 79.0526],
+      location: [35.91942, -79.0526],
     },
     {
       name: "Home",
       value: 290,
       hourlyIncome: 65,
-      location: [35.793781, 78.808533],
+      location: [35.793781, -78.808533],
     },
     {
       name: "Cary Academy",
       value: 291,
       hourlyIncome: 85,
-      location: [35.81996, 78.76825],
+      location: [35.81996, -78.76825],
     },
     {
       name: "Downtown Cary",
       value: 363,
       hourlyIncome: 85,
-      location: [35.79147, 78.781143],
+      location: [35.79147, -78.781143],
     },
   ];
 
