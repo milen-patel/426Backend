@@ -2321,7 +2321,7 @@ router.post("/buy", async (req, res) => {
   }
 
   // Make sure user has property space
-  if ((user.properties.length == user.maxProperties) && !user.properties.contains(req.body.id)) {
+  if ((user.properties.length == user.maxProperties) && !user.properties.includes(req.body.id)) {
     res.json({ error: "Not enough property space" });
     return;
   }
