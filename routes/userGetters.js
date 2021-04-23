@@ -1,4 +1,5 @@
 const { newUserSchema } = require("./validation");
+const Property = require("../models/Property");
 
 const router = require("express").Router();
 const User = require("../models/User");
@@ -71,10 +72,21 @@ router.get("/accountInformation", async (req, res) => {
 
   if (!user) {
     res.json(defaultError);
+    return;
   }
+
+  // Now try to match properties
+  let properties;
+  if (user.properties) {
+    properties = await Property.find({_id:{"$in":user.properties}});
+  }
+
+  // Don't give back the password TODO
+
   res.json({
     error: null,
     data: user,
+    properties: properties,
   });
 });
 
