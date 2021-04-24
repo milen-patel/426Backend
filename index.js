@@ -69,18 +69,22 @@ setInterval(async () => {
 
       if (targetProperty.ownerEmailT1 == u.email) {
         u.balance += targetProperty.hourlyIncome ** 1;
+        u.experience += targetProperty.hourlyIncome ** 1;
       }
       if (targetProperty.ownerEmailT2 == u.email) {
         u.balance += targetProperty.hourlyIncome ** 2;
+        u.experience += targetProperty.hourlyIncome ** 2;
       }
       if (targetProperty.ownerEmailT3 == u.email) {
         u.balance += targetProperty.hourlyIncome ** 3;
+        u.experience += targetProperty.hourlyIncome ** 3;
       }
       if (targetProperty.ownerEmailT4 == u.email) {
         u.balance += targetProperty.hourlyIncome ** 4;
+        u.experience += targetProperty.hourlyIncome ** 4;
       }
       if (targetProperty.ownerEmailT5 == u.email) {
-        u.balance += targetProperty.hourlyIncome ** 5;
+        u.experience += targetProperty.hourlyIncome ** 5;
       }
     });
 
@@ -88,4 +92,4 @@ setInterval(async () => {
     console.log(`Credited ${u.email} with ${u.balance - startBalance}`);
     u.save();
   });
-}, 5*60*1000);
+}, 1*60*1000);
