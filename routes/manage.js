@@ -2270,7 +2270,7 @@ router.post("/sell", async (req, res) => {
   // Remove the user from the property
   if (tier == 1) {
     prop.ownerEmailT1 = "";
-  } else if (tier == 2){
+  } else if (tier == 2) {
     prop.ownerEmailT2 = "";
   } else if (tier == 3) {
     prop.ownerEmailT3 = "";
@@ -2302,7 +2302,14 @@ router.post("/sell", async (req, res) => {
     user.properties.remove(req.body.id);
   }
 
-  res.json({error:null,data:{}});
+  await user.save();
+  await prop.save();
+  
+  res.json({ error: null, data: { 
+    user: user,
+    properties: await Property.find({ _id: { $in: user.properties } }),
+   } });
+  
 });
 
 router.post("/nearbyProperties", async (req, res) => {
