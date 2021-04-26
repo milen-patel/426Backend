@@ -2317,6 +2317,9 @@ router.post("/sell", async (req, res) => {
 });
 
 router.post("/nearbyProperties", async (req, res) => {
+  console.log(req.body.lat);
+  console.log(req.body.lon);
+  console.log(req.body.range);
   //Make sure we have input
   if (!req.body.lat) {
     res.json({ error: "Missing lat" });
