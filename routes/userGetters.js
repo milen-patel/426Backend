@@ -90,6 +90,22 @@ router.get("/accountInformation", async (req, res) => {
   });
 });
 
+router.get("/leaderboard", async (req, res) => {
+  let vals = await User.find().sort({experience: -1}).limit(10);
+  let processed = vals.map((e) => {
+    return {
+      experience: e.experience,
+      name: e.name,
+      accountCreatedDate: e.accountCreatedDate,
+      numProperties: e.properties ? e.properties.length : 0,
+    }
+  });
+  res.json({
+    error: null,
+    data: processed,
+  })
+});
+
 router.post("/move", async (req, res) => {
   const user = await User.findOne({ email: req.user.email });
 

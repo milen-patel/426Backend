@@ -2226,7 +2226,7 @@ router.post("/sell", async (req, res) => {
   }
 
   // Find the user
-  let usr = await User.find({ email: red.body.email });
+  let usr = await User.findOne({ email: req.body.email });
   if (!usr) {
     res.json({ error: "No such user found" });
     return;
@@ -2299,15 +2299,15 @@ router.post("/sell", async (req, res) => {
   }
 
   if (!ownsOtherTier) {
-    user.properties.remove(req.body.id);
+    usr.properties.remove(req.body.id);
   }
 
-  await user.save();
+  await usr.save();
   await prop.save();
   
   res.json({ error: null, data: { 
-    user: user,
-    properties: await Property.find({ _id: { $in: user.properties } }),
+    user: usr,
+    properties: await Property.find({ _id: { $in: usr.properties } }),
    } });
   
 });
