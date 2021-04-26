@@ -2299,7 +2299,11 @@ router.post("/sell", async (req, res) => {
   }
 
   if (!ownsOtherTier) {
-    usr.properties.remove(req.body.id);
+    console.log("User sold last tier of this property they owned, deleting it from their property list")
+    const idx = usr.properties.indexOf(req.body.id)
+    usr.properties.splice(idx, 1);
+  } else{
+    console.log("User sold a tier of this property but owns other tiers, keeping it in the property list")
   }
 
   await usr.save();
