@@ -29,6 +29,10 @@ const userSchema = new mongoose.Schema(
           type: [Number],
           index: `2dsphere`,
         },
+        multiplier: {
+            type: Number,
+            default: 1.0,
+        }
     }
 );
 

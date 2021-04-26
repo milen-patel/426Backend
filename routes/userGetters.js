@@ -8,11 +8,38 @@ const defaultError = {
   error: "No such user exists on the database",
 };
 
+router.post("/increaseMultiplier", async (req, res) => {
+  const user = await User.findOne({ email: req.user.email });
+
+  if (!user) {
+    res.json(defaultError);
+    return;
+  }
+  
+  // Make sure they have enough balance
+  if (user.balance < 1000000) {
+    res.json({error: "Not enough money"});
+    return;
+  }
+
+  user.balance -= 1000000;
+  user.multiplier += 0.01;
+  await user.save();
+  res.json({
+    error: null,
+    data: {
+      balance: user.balance,
+      multiplier: user.multiplier,
+    }
+  })
+});
+
 router.get("/experience", async (req, res) => {
   const user = await User.findOne({ email: req.user.email });
 
   if (!user) {
     res.json(defaultError);
+    return;
   }
   res.json({
     error: null,
