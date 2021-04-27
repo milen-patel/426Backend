@@ -19,7 +19,7 @@ const userSchema = new mongoose.Schema(
         },
         balance: {
             type: Number,
-            default: 5000,
+            default: 50000,
         },
         maxProperties: {
             type: Number,
