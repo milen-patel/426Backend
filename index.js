@@ -37,7 +37,19 @@ app.use("/api/users", authenticationRoute);
 app.use("/api/property", verifyToken, manageRoute);
 app.use("/api/user/", verifyToken, userGettersRoute);
 
-//TODO Add Leaderboard
+// Add API for gathering homepage stats
+app.get("/api/stats", async (req, res) => {
+  let allPlayers = await User.find({});
+  let sum = 0;
+  allPlayers.forEach(e => (sum+=e.experience));
+  res.json(
+    {
+      numUsers: await User.countDocuments(),
+      numProperties: await Property.countDocuments(),
+      totalEarnings: sum,
+    }
+  )
+});
 
 // Every minute, update user balance
 setInterval(async () => {
