@@ -129,9 +129,6 @@ router.post("/sell", async (req, res) => {
 });
 
 router.post("/nearbyProperties", async (req, res) => {
-  console.log(req.body.lat);
-  console.log(req.body.lon);
-  console.log(req.body.range);
   //Make sure we have input
   if (!req.body.lat) {
     res.json({ error: "Missing lat" });
@@ -144,7 +141,6 @@ router.post("/nearbyProperties", async (req, res) => {
   }
 
   if (!req.body.range) {
-    //TODO Make sure all of these are numbers
     res.json({ error: "Missing range" });
     return;
   }
@@ -243,7 +239,7 @@ router.post("/buy", async (req, res) => {
     return;
   }
 
-  // Make sure user has property space TODO Fix this
+  // Make sure user has property space 
   if (
     user.properties.length == user.maxProperties &&
     !user.properties.includes(req.body.id)
@@ -274,7 +270,7 @@ router.post("/buy", async (req, res) => {
   }
 
   // Save property and user to db
-  await user.save(); //TODO shouldn't return password
+  await user.save(); 
   await targetProperty.save();
 
   res.json({
@@ -285,5 +281,36 @@ router.post("/buy", async (req, res) => {
     },
   });
 });
+
+/*
+router.post("/reloadProperties", async (req, res) => {
+  console.log("Request to add store");
+
+  randomCity = randomCity.map((e) => {
+    return {
+      name: e.name,
+      value: Math.floor(Math.random() * 1000),
+      hourlyIncome: Math.floor(Math.random() * 1000),
+      location: e.location,
+    }
+  });
+
+  let bigProcessed = big.map((e) => {
+    return {
+      name: e.name,
+      value: e.value,
+      location: [e.lat, e.lng],
+      hourlyIncome: Math.floor(Math.random() * 1000),
+    }
+  });
+
+  bigProcessed.map((e) => {
+    new Property(e).save();
+  });
+
+  res.send("Done");
+});
+*/
+
 
 module.exports = router;

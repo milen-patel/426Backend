@@ -108,8 +108,6 @@ router.get("/accountInformation", async (req, res) => {
     properties = await Property.find({_id:{"$in":user.properties}});
   }
 
-  // Don't give back the password TODO
-
   res.json({
     error: null,
     data: user,

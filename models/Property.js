@@ -15,6 +15,7 @@ const propertySchema = new mongoose.Schema({
   location: {
     type: [Number],
     index: `2dsphere`,
+    sparse: true,
   },
   level: {
     type: Number,
@@ -22,6 +23,6 @@ const propertySchema = new mongoose.Schema({
   },
 });
 
-propertySchema.index({ location: "2dsphere" });
+propertySchema.index({ location: "2dsphere" }, {sparse: "true"});
 
 module.exports = mongoose.model("Property", propertySchema);
