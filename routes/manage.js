@@ -118,6 +118,8 @@ router.post("/sell", async (req, res) => {
     console.log("User sold a tier of this property but owns other tiers, keeping it in the property list")
   }
 
+  prop.level++;
+
   await usr.save();
   await prop.save();
   
@@ -190,6 +192,7 @@ router.post("/buy", async (req, res) => {
   }
 
   let targetProperty = await Property.findById(req.body.propertyId);
+  targetProperty.level++;
 
   if (!targetProperty) {
     res.json({ error: "No Such Property Found" });
