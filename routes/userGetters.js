@@ -116,7 +116,7 @@ router.get("/accountInformation", async (req, res) => {
 });
 
 router.get("/leaderboard", async (req, res) => {
-  let vals = await User.find().sort({experience: -1}).limit(10);
+  let vals = await User.find().sort({experience: -1});
   let processed = vals.map((e) => {
     return {
       experience: e.experience,
